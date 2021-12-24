@@ -21,6 +21,14 @@ const Quiz = (props) => {
             
             <Text style={{color: COLORS.white, fontSize: 18, opacity: 0.6}}>/ {allQuestions.length}</Text>
           </View>
+
+          {/* Questions */}
+            <Text style={{
+              color: COLORS.white,
+              fontSize: 30
+            }}>
+              {allQuestions[currentQuestionIndex]?.question}
+            </Text>
         </View>
         )
   }

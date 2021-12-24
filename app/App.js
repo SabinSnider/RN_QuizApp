@@ -9,12 +9,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
+import { Quiz } from './screens';
 const App = () => {
    return (
-    <SafeAreaView>
-      <Text>Hello React Native..</Text>
-    </SafeAreaView>
+    <Quiz/>
   );
 };
 

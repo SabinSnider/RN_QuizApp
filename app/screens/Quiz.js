@@ -7,7 +7,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const Quiz = (props) => {
 
   const allQuestions = data;
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);  
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
+  const [correctOption, setCorrectOption] = useState(null); 
+  const [isOptionDisabled, setIsOptionDisabled] = useState(false);
+  const [score, setScore] = useState(0); 
 
   const renderQuestion = () =>{
         return(
@@ -33,6 +37,17 @@ const Quiz = (props) => {
         )
   }
   
+  const validateAnswer = (selectedOption) => {
+    let correct_option = allQuestions[currentQuestionIndex]['correct_option']; //get correct answer/option from data
+    setCurrentOptionSelected(selectedOption);
+    setCorrectOption(correct_option);
+    if(selectedOption == correct_option){
+      //Set Score
+        setScore(score+1)
+    }
+
+  }
+
   const renderOptions = () =>{
     return(
       <View>
@@ -40,6 +55,7 @@ const Quiz = (props) => {
           allQuestions[currentQuestionIndex]?.options.map(option => (
             <TouchableOpacity
             key={option}
+            onPress={() => validateAnswer(option)}
             style= {styles.optionstyle}>
               <Text style={{fontSize: 20, color:COLORS.white}}>{option}</Text>
             </TouchableOpacity>

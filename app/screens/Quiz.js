@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image, TouchableOpacity} from "react-native";
 import { COLORS, SIZES} from '../constants';
 import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,7 +33,21 @@ const Quiz = (props) => {
         )
   }
   
-
+  const renderOptions = () =>{
+    return(
+      <View>
+        {
+          allQuestions[currentQuestionIndex]?.options.map(option => (
+            <TouchableOpacity
+            key={option}
+            style= {styles.optionstyle}>
+              <Text style={{fontSize: 20, color:COLORS.white}}>{option}</Text>
+            </TouchableOpacity>
+          ))
+        }
+      </View>
+    )
+  }
 
   return (
       <SafeAreaView style={{flex:1}}
@@ -52,7 +66,7 @@ const Quiz = (props) => {
         {/* Questions*/}
         {renderQuestion()}
         {/* Options*/}
-
+        {renderOptions()}
         {/* Next Button*/}
 
         {/* Background Image*/}
@@ -77,6 +91,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     opacity: 0.5
+  },
+  optionstyle: {
+    borderWidth: 3, borderColor: COLORS.secondary+ '40',
+    backgroundColor: COLORS.secondary+'20',
+    height: 60, borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginVertical: 10
   }
 });
 

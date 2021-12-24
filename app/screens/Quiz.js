@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image} from "react-native";
 import { COLORS, SIZES} from '../constants';
 import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Quiz = (props) => {
+
+  const allQuestions = data;
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);  
+
+  const renderQuestion = () =>{
+        return(
+          <View>
+          {/* Question counter */}
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'flex-end'
+          }}>
+            <Text style={{color: COLORS.white, fontSize: 20, opacity: 0.6, marginRight: 2}}> {currentQuestionIndex +1 }  </Text> 
+            
+            <Text style={{color: COLORS.white, fontSize: 18, opacity: 0.6}}>/ {allQuestions.length}</Text>
+          </View>
+        </View>
+        )
+  }
+  
+
+
   return (
       <SafeAreaView style={{flex:1}}
       >
@@ -20,7 +42,7 @@ const Quiz = (props) => {
         {/* Progress bar */}
 
         {/* Questions*/}
-
+        {renderQuestion()}
         {/* Options*/}
 
         {/* Next Button*/}
@@ -30,6 +52,7 @@ const Quiz = (props) => {
         <Image
         source={require("../assets/images/DottedBG.png")}
         style={styles.image}
+        resizeMode="contain"
         />
        </View>
       </SafeAreaView>
@@ -42,9 +65,10 @@ const styles = StyleSheet.create({
     height: 130,
     zIndex: -1,
     position: 'absolute',
-    bottom:0,
+    bottom: 0,
     left: 0,
-    right:0
+    right: 0,
+    opacity: 0.5
   }
 });
 

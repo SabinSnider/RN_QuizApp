@@ -11,7 +11,8 @@ const Quiz = (props) => {
   const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
   const [correctOption, setCorrectOption] = useState(null); 
   const [isOptionDisabled, setIsOptionDisabled] = useState(false);
-  const [score, setScore] = useState(0); 
+  const [score, setScore] = useState(0);
+  const [showNextButton, setShowNextButton] = useState(false); 
 
   const renderQuestion = () =>{
         return(
@@ -45,7 +46,11 @@ const Quiz = (props) => {
       //Set Score
         setScore(score+1)
     }
-
+      //Show Next Button
+      setShowNextButton(true);
+  }
+  const handleNext = () => {
+    
   }
 
   const renderOptions = () =>{
@@ -56,6 +61,7 @@ const Quiz = (props) => {
             <TouchableOpacity
             key={option}
             onPress={() => validateAnswer(option)}
+            disabled = {isOptionDisabled}
             style= {[styles.optionstyle, 
               {borderColor: option==correctOption 
                 ? COLORS.success 
@@ -92,6 +98,18 @@ const Quiz = (props) => {
     )
   }
 
+  const renderNextButton = () => {
+    if(showNextButton){
+    return(
+      <TouchableOpacity
+        onPress={handleNext} 
+        style={{marginTop: 20, width:'100%', backgroundColor: COLORS.accent, padding: 20, borderRadius: 5 }}>
+        <Text style= {{fontSize: 20, color: COLORS.white, textAlign:'center'}}>Next</Text>
+      </TouchableOpacity>
+    )
+  }
+  }
+
   return (
       <SafeAreaView style={{flex:1}}
       >
@@ -108,10 +126,12 @@ const Quiz = (props) => {
 
         {/* Questions*/}
         {renderQuestion()}
+
         {/* Options*/}
         {renderOptions()}
+        
         {/* Next Button*/}
-
+        {renderNextButton()}
         {/* Background Image*/}
 
         <Image

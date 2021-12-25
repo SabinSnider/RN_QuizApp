@@ -50,7 +50,15 @@ const Quiz = (props) => {
       setShowNextButton(true);
   }
   const handleNext = () => {
-    
+    if(currentQuestionIndex == allQuestions.length - 1){
+
+    }else{
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentOptionSelected(null);
+      setCorrectOption(null);
+      setIsOptionDisabled(false);
+      setShowNextButton(false);
+    }
   }
 
   const renderOptions = () =>{

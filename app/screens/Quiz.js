@@ -56,7 +56,9 @@ const Quiz = (props) => {
             <TouchableOpacity
             key={option}
             onPress={() => validateAnswer(option)}
-            style= {styles.optionstyle}>
+            style= {[styles.optionstyle, {borderColor: option==correctOption ? COLORS.success :
+              option == currentOptionSelected ? COLORS.error : COLORS.secondary + '40'} 
+            ]}>
               <Text style={{fontSize: 20, color:COLORS.white}}>{option}</Text>
 
             {/* show right or wrong icon */}
@@ -125,7 +127,8 @@ const styles = StyleSheet.create({
     opacity: 0.5
   },
   optionstyle: {
-    borderWidth: 3, borderColor: COLORS.secondary+ '40',
+    borderWidth: 3,
+    
     backgroundColor: COLORS.secondary+'20',
     height: 60, borderRadius: 20,
     flexDirection: 'row',

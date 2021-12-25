@@ -58,6 +58,22 @@ const Quiz = (props) => {
             onPress={() => validateAnswer(option)}
             style= {styles.optionstyle}>
               <Text style={{fontSize: 20, color:COLORS.white}}>{option}</Text>
+
+            {/* show right or wrong icon */}
+            {
+              option == correctOption ? (
+                <View style={styles.tickstyle}>
+                  <MaterialCommunityIcons name="check"
+                    style={{color:COLORS.white, fontSize: 20}}/>
+                </View>
+              ): option == currentOptionSelected ? (
+                <View style={styles.crossstyle}>
+                  <MaterialCommunityIcons name="close"
+                    style={{color:COLORS.white, fontSize: 20 }} />
+                </View>
+              ): null
+            }
+
             </TouchableOpacity>
           ))
         }
@@ -116,7 +132,24 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'space-between',
     paddingHorizontal: 20,
     marginVertical: 10
+  },
+  tickstyle: {
+    width: 30,
+    height: 30,
+    borderRadius: 30/2,
+    backgroundColor: COLORS.success,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  crossstyle: {
+    width: 30,
+    height: 30,
+    borderRadius: 30/2,
+    backgroundColor: COLORS.error,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
+
 });
 
 export default Quiz;

@@ -56,8 +56,17 @@ const Quiz = (props) => {
             <TouchableOpacity
             key={option}
             onPress={() => validateAnswer(option)}
-            style= {[styles.optionstyle, {borderColor: option==correctOption ? COLORS.success :
-              option == currentOptionSelected ? COLORS.error : COLORS.secondary + '40'} 
+            style= {[styles.optionstyle, 
+              {borderColor: option==correctOption 
+                ? COLORS.success 
+                :option == currentOptionSelected 
+                ? COLORS.error
+                : COLORS.secondary + '40',
+              backgroundColor: option==correctOption 
+              ? COLORS.success + '20' 
+              :option == currentOptionSelected 
+              ? COLORS.error + '20'
+              : COLORS.secondary + '20',} 
             ]}>
               <Text style={{fontSize: 20, color:COLORS.white}}>{option}</Text>
 
@@ -128,8 +137,7 @@ const styles = StyleSheet.create({
   },
   optionstyle: {
     borderWidth: 3,
-    
-    backgroundColor: COLORS.secondary+'20',
+   
     height: 60, borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center', justifyContent: 'space-between',

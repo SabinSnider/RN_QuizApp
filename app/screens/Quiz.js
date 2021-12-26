@@ -157,6 +157,12 @@ const Quiz = (props) => {
           }}>
             <View style={styles.scoreModalstyle}>
               <Text style={{fontSize: 30, fontWeight: 'bold'}}> {score > (allQuestions.length /2) ? "Congratulations!1" : "Ooopps!" } </Text>
+            
+            <View style={styles.scoreStyle}>
+              <Text style= {{fontSize: 30, color: score > (allQuestions.length/2) ? COLORS.success : COLORS.error}}> {score}</Text>
+              <Text style= {{fontSize: 20, color: COLORS.black}}> / {allQuestions.length}</Text>
+            </View>
+            
             </View>
           </View>
         </Modal>
@@ -214,6 +220,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     alignItems: 'center'
+  },
+  scoreStyle: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginVertical: 20
   }
 
 

@@ -62,6 +62,17 @@ const Quiz = (props) => {
       setShowNextButton(false);
     }
   }
+  const restartQuiz = () => {
+    setShowScoreModal(false);
+    
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setCurrentOptionSelected(null);
+    setCorrectOption(null);
+    setIsOptionDisabled(false);
+    setShowNextButton(false);
+
+  }
 
   const renderOptions = () =>{
     return(
@@ -147,7 +158,7 @@ const Quiz = (props) => {
         <Modal
           animationType = "slide"
           transparent = {true}
-          visible = {true}
+          visible = {showScoreModal}
         >
           <View style={{
             flex: 1,
@@ -162,7 +173,12 @@ const Quiz = (props) => {
               <Text style= {{fontSize: 30, color: score > (allQuestions.length/2) ? COLORS.success : COLORS.error}}> {score}</Text>
               <Text style= {{fontSize: 20, color: COLORS.black}}> / {allQuestions.length}</Text>
             </View>
-            
+            {/* Try Again button */}
+            <TouchableOpacity 
+              onPress={restartQuiz}
+              style={styles.retrybutton}>
+              <Text style={styles.retryText}>Retry Again</Text>
+            </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -226,6 +242,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginVertical: 20
+  },
+  retrybutton:{
+    backgroundColor: COLORS.accent,
+    padding: 20,
+    width:'100%',
+    borderRadius: 20 
+  },
+  retryText: {
+    textAlign: 'center',
+    color: COLORS.white,
+    fontSize: 20
   }
 
 

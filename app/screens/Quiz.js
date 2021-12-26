@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image, TouchableOpacity} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image, TouchableOpacity, Modal} from "react-native";
 import { COLORS, SIZES} from '../constants';
 import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,6 +13,7 @@ const Quiz = (props) => {
   const [isOptionDisabled, setIsOptionDisabled] = useState(false);
   const [score, setScore] = useState(0);
   const [showNextButton, setShowNextButton] = useState(false); 
+  const [showScoreModal, setShowScoreModal] = useState(false);
 
   const renderQuestion = () =>{
         return(
@@ -51,6 +52,7 @@ const Quiz = (props) => {
   }
   const handleNext = () => {
     if(currentQuestionIndex == allQuestions.length - 1){
+      setShowScoreModal(true);
 
     }else{
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -140,6 +142,24 @@ const Quiz = (props) => {
         
         {/* Next Button*/}
         {renderNextButton()}
+
+        {/* Score Modal */}
+        <Modal
+          animationType = "slide"
+          transparent = {true}
+          visible = {true}
+        >
+          <View style={{
+            flex: 1,
+            backgroundColor: COLORS.primary,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <View style={styles.scoreModalstyle}>
+              <Text style={{fontSize: 30, fontWeight: 'bold'}}> {score > (allQuestions.length /2) ? "Congratulations!1" : "Ooopps!" } </Text>
+            </View>
+          </View>
+        </Modal>
         {/* Background Image*/}
 
         <Image
@@ -187,7 +207,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.error,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  scoreModalstyle: {
+    backgroundColor: COLORS.white,
+    width: '90%',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center'
   }
+
+
 
 });
 

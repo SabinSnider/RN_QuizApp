@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image, TouchableOpacity, Modal} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, StatusBar , Image, TouchableOpacity, Modal, Animated} from "react-native";
 import { COLORS, SIZES} from '../constants';
 import data from '../data/QuizData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,9 +17,11 @@ const Quiz = (props) => {
 
   const renderQuestion = () =>{
         return(
-          <View>
-          {/* Question counter */}
           <View style={{
+            marginVertical: 40,
+          }}>
+          {/* Question counter */}
+          <View style={{            
             flexDirection: 'row',
             alignItems: 'flex-end'
           }}>
@@ -61,6 +63,11 @@ const Quiz = (props) => {
       setIsOptionDisabled(false);
       setShowNextButton(false);
     }
+    Animated.timing(progress, {
+      toValue: currentQuestionIndex +1,
+      duration: 1000,
+      useNativeDriver: false
+    }).start();
   }
   const restartQuiz = () => {
     setShowScoreModal(false);
@@ -71,12 +78,19 @@ const Quiz = (props) => {
     setCorrectOption(null);
     setIsOptionDisabled(false);
     setShowNextButton(false);
+    Animated.timing(progress, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: false
+    }).start();
 
   }
 
   const renderOptions = () =>{
     return(
-      <View>
+      <View style={{
+        marginVertical: 10
+      }}>
         {
           allQuestions[currentQuestionIndex]?.options.map(option => (
             <TouchableOpacity
@@ -131,9 +145,34 @@ const Quiz = (props) => {
   }
   }
 
+  const [progress, setProgress] = useState(new Animated.Value(0));
+  const progressAnim = progress.interpolate({
+      inputRange: [0, allQuestions.length],
+      outputRange: ['0%', '100%']
+  })
+  const renderProgressBar = () => {
+    return(
+      <View style={{
+        width: '100%',
+        height: 20,
+        borderRadius: 20,
+        backgroundColor: '#00000020',
+      }}>
+        <Animated.View style={[{
+            height: 20,
+            borderRadius: 20,
+            backgroundColor: COLORS.accent
+        },{
+          width : progressAnim
+        }        
+        ]}>
+        </Animated.View>
+      </View>
+    )
+  }
+
   return (
-      <SafeAreaView style={{flex:1}}
-      >
+      <SafeAreaView style={{flex:1}}>
        <StatusBar barStyle="light-content" backgroundColor={COLORS.primary}/>
        <View style= {{
          flex: 1,
@@ -144,6 +183,7 @@ const Quiz = (props) => {
        }}>
         
         {/* Progress bar */}
+        { renderProgressBar() }
 
         {/* Questions*/}
         {renderQuestion()}
@@ -167,7 +207,7 @@ const Quiz = (props) => {
             justifyContent: 'center'
           }}>
             <View style={styles.scoreModalstyle}>
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}> {score > (allQuestions.length /2) ? "Congratulations!1" : "Ooopps!" } </Text>
+              <Text style={{fontSize: 30, fontWeight: 'bold'}}> {score > (allQuestions.length /2) ? "Congratulations!!" : "Ooopps!" } </Text>
             
             <View style={styles.scoreStyle}>
               <Text style= {{fontSize: 30, color: score > (allQuestions.length/2) ? COLORS.success : COLORS.error}}> {score}</Text>
@@ -182,8 +222,8 @@ const Quiz = (props) => {
             </View>
           </View>
         </Modal>
+        
         {/* Background Image*/}
-
         <Image
         source={require("../assets/images/DottedBG.png")}
         style={styles.image}
